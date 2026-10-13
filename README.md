@@ -21,3 +21,8 @@ Source design and QA evidence are described in design-qa.md. Brand emblem source
 https://shankarappan.github.io/noble-escrow-demo/
 
 Changes pushed to main deploy through the GitHub Pages workflow. That workflow sets GITHUB_PAGES=true to build with the project URL prefix. Local development retains the root path.
+
+## Free FAQ assistant
+The floating chat runs entirely in the browser, with no AI API, backend, message transmission or conversation storage. Its 16 curated topics live in src/faq-data.mjs and share the first four answers with the homepage FAQs. It matches common phrases and falls back to team contact for unsupported questions. This is a bounded FAQ assistant, not a generative AI adviser. Content is draft and needs business review before production use.
+
+Run matcher checks: node --test tests/faq.test.mjs

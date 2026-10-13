@@ -10,3 +10,5 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Approved visual direction
 Use the selected charcoal, warm white and restrained gold desktop and mobile mockups in ../noble-escrow-audit/mockups. No navy or blue. Bold modern sans-serif, architectural travertine hero, clean ruled sections. This is a responsive website, not a native mobile app. Enquiries are presentation-only: no transmission, persistence or real escrow transaction.
+
+FAQ assistant preference: free, client-side curated FAQ matching. No paid AI API. Keep responses grounded in the editable FAQ source; unsupported questions must offer team contact rather than fabricate answers. Do not persist or transmit conversations.

@@ -23,6 +23,7 @@ jobs:
       - run: npm run build
         env:
           GITHUB_PAGES: 'true'
+      - run: node --test tests/faq.test.mjs
       - run: npm run test:sites
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
