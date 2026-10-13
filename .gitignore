@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.*
+.DS_Store
+qa/
+design-qa.md
+noble-escrow-demo/
