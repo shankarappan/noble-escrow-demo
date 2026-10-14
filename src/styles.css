@@ -33,3 +33,4 @@ html.lenis{scroll-behavior:auto!important}
 .chat-launcher svg{color:#f8f6ef}.chat-launcher:hover{background:#41423b;box-shadow:0 7px 24px #0003}
 @media(max-width:760px){.chat-launcher{width:48px;height:48px;min-height:48px;padding:0}.chat-panel{bottom:62px}}
 @media(prefers-reduced-motion:reduce){.chat-launcher{transition:none}}
+.hero .image-caption{right:92px}@media(max-width:760px){.hero .image-caption{right:78px}}
