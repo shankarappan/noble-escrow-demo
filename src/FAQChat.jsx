@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChatCircleDots, X, ArrowRight, ArrowCounterClockwise } from '@phosphor-icons/react';
+import { ChatTeardrop, X, ArrowRight, ArrowCounterClockwise } from '@phosphor-icons/react';
 import { faqEntries, findFAQ } from './faq-data.mjs';
 const greeting={role:'assistant',text:'Hello. I can help with escrow FAQs, fees, release conditions and getting started. Choose a question or type your own.'};
 export function FAQChat({onEnquiry}) {
@@ -17,5 +17,5 @@ export function FAQChat({onEnquiry}) {
  <form className="chat-form" onSubmit={e=>{e.preventDefault();if(input.trim())ask(input.trim())}}><label htmlFor="faq-question" className="sr-only">Ask an FAQ question</label><input id="faq-question" ref={inputRef} value={input} onChange={e=>setInput(e.target.value)} placeholder="Ask about escrow…" maxLength={400} autoComplete="off"/><button type="submit" disabled={!input.trim()} aria-label="Send FAQ question"><ArrowRight size={22}/></button></form>
  <div className="chat-footer"><button onClick={()=>{close();onEnquiry()}}>Talk to the team</button><button onClick={()=>{setMessages([greeting]);setInput('');inputRef.current?.focus()}}><ArrowCounterClockwise size={14}/>Clear chat</button></div><p className="chat-privacy">Demo guidance. Please don’t enter sensitive information.</p>
  </section>}
- <button ref={launcherRef} className="chat-launcher" aria-expanded={open} aria-controls="faq-chat-panel" onClick={()=>open?close():setOpen(true)}><ChatCircleDots size={24}/>{open?'Close chat':'Ask a question'}</button></div>
+ <button ref={launcherRef} className="chat-launcher" aria-label={open?'Close chat':'Ask a question'} title={open?'Close chat':'Ask a question'} aria-expanded={open} aria-controls="faq-chat-panel" onClick={()=>open?close():setOpen(true)}>{open?<X size={24} aria-hidden="true"/>:<ChatTeardrop size={26} weight="regular" aria-hidden="true"/>}</button></div>
 }

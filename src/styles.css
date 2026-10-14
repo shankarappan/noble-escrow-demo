@@ -27,3 +27,9 @@
 html.lenis{scroll-behavior:auto!important}
 @media(max-width:1150px){.scroll-flow-enabled .hero{top:85px;height:calc(100svh - 85px)}.scroll-flow-enabled .hero h1{font-size:clamp(55px,6.6vw,76px)}}
 @media(max-width:760px){.scroll-flow-enabled .hero-flow{height:145svh}.scroll-flow-enabled .hero{top:74px;height:calc(100svh - 74px)}.scroll-flow-enabled .hero h1{font-size:45px}.scroll-flow-enabled .hero-photo{inset:0;height:100%}}
+
+/* Compact, accessible FAQ launcher. */
+.chat-launcher{width:52px;height:52px;min-height:52px;padding:0;border-radius:50%;border:1px solid #b8996155;display:grid;place-items:center;box-shadow:0 5px 20px #0002;transition:background .2s,box-shadow .2s}
+.chat-launcher svg{color:#f8f6ef}.chat-launcher:hover{background:#41423b;box-shadow:0 7px 24px #0003}
+@media(max-width:760px){.chat-launcher{width:48px;height:48px;min-height:48px;padding:0}.chat-panel{bottom:62px}}
+@media(prefers-reduced-motion:reduce){.chat-launcher{transition:none}}

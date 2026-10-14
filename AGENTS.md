@@ -16,3 +16,5 @@ FAQ assistant preference: free, client-side curated FAQ matching. No paid AI API
 Motion preference: premium 3D depth and flowing scroll experience, preserving the approved visual identity. Use native scroll, a sticky four-stage escrow journey, subtle parallax and perspective reveals. Respect reduced motion and provide pause control; preserve all navigation and demo interactions.
 
 Latest motion feedback: escrow artwork must remain still. Replace rotating/lifting illustration and tilted reveals with an Apple-inspired calm hero sequence and smoothly eased wheel scroll. Gentle hero zoom and small vertical reveals only; preserve touch-native behavior and reduced-motion fallback.
+
+Approved current calm hero and smooth scrolling. FAQ launcher preference: compact circular icon-only charcoal button with a simple modern chat glyph and subtle gold accent; preserve accessible label, focus indication and touch target. Avoid wide persistent text labels.
