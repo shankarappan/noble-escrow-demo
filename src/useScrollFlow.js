@@ -8,7 +8,7 @@ export function useScrollFlow(root, paused) {
   const [compact, setCompact] = useState(false);
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const heightQuery = window.matchMedia('(max-height: 700px)');
+    const heightQuery = window.matchMedia('(max-height: 600px), (max-width: 760px) and (max-height: 760px)');
     const update = () => { setReduced(query.matches); setCompact(heightQuery.matches); };
     update();
     query.addEventListener('change', update);
