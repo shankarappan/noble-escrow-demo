@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 
 const clamp = value => Math.max(0, Math.min(1, value));
 
-export function useScrollFlow(root, paused, blocked) {
+export function useScrollFlow(root, blocked) {
   const smoothScroll = useRef(null);
   const [stage, setStage] = useState(0);
   const [reduced, setReduced] = useState(false);
@@ -19,7 +19,7 @@ export function useScrollFlow(root, paused, blocked) {
     return () => { query.removeEventListener('change', update); heightQuery.removeEventListener('change', update); };
   }, []);
 
-  const enabled = !paused && !reduced && !compact;
+  const enabled = !reduced && !compact;
   useEffect(() => {
     if (!enabled) return;
     const lenis = new Lenis({ autoRaf: true, lerp: .095, smoothWheel: true, syncTouch: false,

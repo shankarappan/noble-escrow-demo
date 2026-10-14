@@ -26,9 +26,8 @@ const asset = name => `${import.meta.env.BASE_URL}assets/${name}`;
 const summaries = ['Milestone-based payment arrangements.','Holding funds under agreed conditions.','Defined release and refund terms.','A considered approach to conditional payments.'];
 export function App() {
  const motionRoot=useRef(null);
- const [motionPaused,setMotionPaused]=useState(false);
  const [menu,setMenu]=useState(false), [detail,setDetail]=useState(null), [enquiry,setEnquiry]=useState(false), [selected,setSelected]=useState('Not sure yet'), [sent,setSent]=useState(false);
- const {stage,enabled,goToStage}=useScrollFlow(motionRoot,motionPaused,!!detail||enquiry);
+ const {stage,enabled,goToStage}=useScrollFlow(motionRoot,!!detail||enquiry);
  const openEnquiry=(service='Not sure yet')=>{setSelected(service);setSent(false);setDetail(null);setMenu(false);setEnquiry(true)};
  const openDetail=kind=>{setMenu(false);setDetail({kind})};
  useEffect(()=>{if(!menu)return;const key=e=>{if(e.key==='Escape')setMenu(false)};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key)},[menu]);
@@ -55,7 +54,6 @@ export function App() {
    <div className="assurance wrap"><span>Independent by design.</span><span className="assurance-line" aria-hidden="true"/><span>Clear agreements. Defined conditions. A considered approach.</span></div>
    <section className="process-flow" id="process" aria-labelledby="process-title"><div className="process wrap">
     <div className="process-copy"><p className="eyebrow">How escrow works</p><h2 id="process-title">A clear path from<br/>agreement to payment.</h2><p>Agree the conditions. Hold funds independently. Release according to the agreement.</p><button className="text-link" onClick={()=>openDetail('process')}>Explore the process <ArrowRight size={22}/></button>
-     <button className="motion-toggle" onClick={()=>setMotionPaused(!motionPaused)} aria-pressed={motionPaused}>{motionPaused?'Resume scroll motion':'Pause scroll motion'}</button>
     </div>
     <div className="journey-visual"><figure className="process-art"><img src={asset('escrow-process.webp')} alt="Illustrative escrow process: agree, deposit, confirm and release, guided by an escrow agreement." loading="lazy"/><figcaption>Illustrative process</figcaption></figure>
      <div className="journey-story"><p className="journey-hint">{enabled?'Scroll to follow the journey':'The escrow journey'}<span>0{stage+1} / 04</span></p>
