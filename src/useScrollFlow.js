@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
+import { useEffect, useState, useRef } from 'react';
 
 const clamp = value => Math.max(0, Math.min(1, value));
 
-export function useScrollFlow(root, paused) {
+export function useScrollFlow(root, paused, blocked) {
+  const smoothScroll = useRef(null);
   const [stage, setStage] = useState(0);
   const [reduced, setReduced] = useState(false);
   const [compact, setCompact] = useState(false);
@@ -18,6 +21,17 @@ export function useScrollFlow(root, paused) {
 
   const enabled = !paused && !reduced && !compact;
   useEffect(() => {
+    if (!enabled) return;
+    const lenis = new Lenis({ autoRaf: true, lerp: .095, smoothWheel: true, syncTouch: false,
+      anchors: { offset: -102 }, prevent: node => !!node.closest('dialog, .chat-panel') });
+    smoothScroll.current = lenis;
+    return () => { lenis.destroy(); smoothScroll.current = null; };
+  }, [enabled]);
+  useEffect(() => {
+    if (blocked) smoothScroll.current?.stop();
+    else smoothScroll.current?.start();
+  }, [blocked, enabled]);
+  useEffect(() => {
     const main = root.current;
     if (!main || !enabled) return;
     const hero = main.querySelector('.hero');
@@ -28,23 +42,21 @@ export function useScrollFlow(root, paused) {
       frame = 0;
       const height = window.innerHeight;
       const mobile = window.innerWidth <= 760;
-      const heroRect = hero.getBoundingClientRect();
-      const heroProgress = clamp(-heroRect.top / heroRect.height);
-      hero.style.setProperty('--hero-depth', `${heroProgress * (mobile ? 55 : 160)}px`);
-      hero.style.setProperty('--hero-copy-depth', `${heroProgress * -65}px`);
+      const heroFlow = main.querySelector('.hero-flow').getBoundingClientRect();
+      const heroProgress = clamp((98 - heroFlow.top) / Math.max(1, heroFlow.height - height + 98));
+      hero.style.setProperty('--hero-scale', 1 + heroProgress * (mobile ? .045 : .08));
+      hero.style.setProperty('--hero-copy-depth', `${heroProgress * -36}px`);
+      hero.style.setProperty('--hero-copy-scale', 1 - heroProgress * .035);
       const rect = journey.getBoundingClientRect();
       const progress = clamp((100 - rect.top) / Math.max(1, rect.height - height + 100));
       const nextStage = Math.min(3, Math.floor(progress * 4));
       setStage(previous => previous === nextStage ? previous : nextStage);
       journey.style.setProperty('--journey-progress', progress);
-      journey.style.setProperty('--journey-rotate', `${(progress - .5) * (mobile ? 9 : 22)}deg`);
-      journey.style.setProperty('--journey-lift', `${Math.sin(progress * Math.PI) * -35}px`);
       for (const element of reveals) {
         const box = element.getBoundingClientRect();
         const entrance = clamp((height - box.top) / (height * .32));
         element.style.setProperty('--entrance', entrance);
-        element.style.setProperty('--reveal-y', `${(1 - entrance) * 55}px`);
-        element.style.setProperty('--reveal-rotate', `${(1 - entrance) * 9}deg`);
+        element.style.setProperty('--reveal-y', `${(1 - entrance) * 18}px`);
       }
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(paint); };
@@ -64,7 +76,9 @@ export function useScrollFlow(root, paused) {
     if (!enabled) return;
     const travel = journey.offsetHeight - window.innerHeight + 100;
     const top = journey.getBoundingClientRect().top + window.scrollY - 100;
-    window.scrollTo({ top: top + travel * ((index + .4) / 4), behavior: 'smooth' });
+    const target = top + travel * ((index + .4) / 4);
+    if (smoothScroll.current) smoothScroll.current.scrollTo(target);
+    else window.scrollTo({ top: target, behavior: 'smooth' });
   };
   return { stage, enabled, goToStage };
 }

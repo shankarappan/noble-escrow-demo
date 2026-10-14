@@ -14,3 +14,5 @@ Use the approved noble-escrow-homepage-mercury-inspired-v3.png in ../noble-escro
 FAQ assistant preference: free, client-side curated FAQ matching. No paid AI API. Keep responses grounded in the editable FAQ source; unsupported questions must offer team contact rather than fabricate answers. Do not persist or transmit conversations.
 
 Motion preference: premium 3D depth and flowing scroll experience, preserving the approved visual identity. Use native scroll, a sticky four-stage escrow journey, subtle parallax and perspective reveals. Respect reduced motion and provide pause control; preserve all navigation and demo interactions.
+
+Latest motion feedback: escrow artwork must remain still. Replace rotating/lifting illustration and tilted reveals with an Apple-inspired calm hero sequence and smoothly eased wheel scroll. Gentle hero zoom and small vertical reveals only; preserve touch-native behavior and reduced-motion fallback.

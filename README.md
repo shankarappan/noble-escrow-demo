@@ -28,4 +28,4 @@ The floating chat runs entirely in the browser, with no AI API, backend, message
 Run matcher checks: node --test tests/faq.test.mjs
 
 ## Scroll experience
-Native-scroll coastal parallax, a sticky four-stage escrow journey with perspective rotation, and service/CTA entrance motion. Visitors can select a stage or pause motion. Reduced-motion preferences and short viewports show all stages in a static reading layout. No paid animation services or additional libraries.
+Calm pinned hero with gentle coastal zoom, eased wheel scrolling via [Lenis](https://github.com/darkroomengineering/lenis), and restrained vertical section reveals. Escrow artwork remains stationary while stage descriptions advance. Touch scrolling stays native. Visitors can pause motion; reduced-motion preferences and short viewports show all stages in a static reading layout. Modal and FAQ scrolling are isolated. No paid services.

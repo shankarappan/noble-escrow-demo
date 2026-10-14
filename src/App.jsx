@@ -27,8 +27,8 @@ const summaries = ['Milestone-based payment arrangements.','Holding funds under 
 export function App() {
  const motionRoot=useRef(null);
  const [motionPaused,setMotionPaused]=useState(false);
- const {stage,enabled,goToStage}=useScrollFlow(motionRoot,motionPaused);
  const [menu,setMenu]=useState(false), [detail,setDetail]=useState(null), [enquiry,setEnquiry]=useState(false), [selected,setSelected]=useState('Not sure yet'), [sent,setSent]=useState(false);
+ const {stage,enabled,goToStage}=useScrollFlow(motionRoot,motionPaused,!!detail||enquiry);
  const openEnquiry=(service='Not sure yet')=>{setSelected(service);setSent(false);setDetail(null);setMenu(false);setEnquiry(true)};
  const openDetail=kind=>{setMenu(false);setDetail({kind})};
  useEffect(()=>{if(!menu)return;const key=e=>{if(e.key==='Escape')setMenu(false)};window.addEventListener('keydown',key);return()=>window.removeEventListener('keydown',key)},[menu]);
@@ -44,14 +44,14 @@ export function App() {
    <button className="menu-toggle" aria-expanded={menu} aria-controls="mobile-links" aria-label={menu?'Close menu':'Open menu'} onClick={()=>setMenu(!menu)}>{menu?<X size={28}/>:<List size={28}/>}</button>
   </div></header>
   <main id="main" ref={motionRoot} className={enabled?"scroll-flow-enabled":"scroll-flow-static"}>
-   <section className="hero" aria-labelledby="hero-title">
+   <div className="hero-flow"><section className="hero" aria-labelledby="hero-title">
     <img className="hero-photo" src={asset('coastal-hero.webp')} alt="" fetchPriority="high"/>
     <div className="hero-copy"><p className="eyebrow">Independent escrow · New Zealand</p>
      <h1 id="hero-title">Move forward.<br/>With confidence.</h1>
      <p className="hero-description">Independent holding and release of funds,<br className="desktop-break"/> guided by the conditions you agree.</p>
      <div className="hero-actions"><button className="button" onClick={()=>openEnquiry()}>Discuss your transaction</button><a className="text-link" href="#process">How escrow works <ArrowRight size={22}/></a></div>
     </div><span className="image-caption">Illustrative imagery</span>
-   </section>
+   </section></div>
    <div className="assurance wrap"><span>Independent by design.</span><span className="assurance-line" aria-hidden="true"/><span>Clear agreements. Defined conditions. A considered approach.</span></div>
    <section className="process-flow" id="process" aria-labelledby="process-title"><div className="process wrap">
     <div className="process-copy"><p className="eyebrow">How escrow works</p><h2 id="process-title">A clear path from<br/>agreement to payment.</h2><p>Agree the conditions. Hold funds independently. Release according to the agreement.</p><button className="text-link" onClick={()=>openDetail('process')}>Explore the process <ArrowRight size={22}/></button>
