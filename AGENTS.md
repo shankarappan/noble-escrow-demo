@@ -20,3 +20,5 @@ Latest motion feedback: escrow artwork must remain still. Replace rotating/lifti
 Approved current calm hero and smooth scrolling. FAQ launcher preference: compact circular icon-only charcoal button with a simple modern chat glyph and subtle gold accent; preserve accessible label, focus indication and touch target. Avoid wide persistent text labels.
 
 Remove the manual pause/resume scroll control. Scroll animations enabled by default; retain system reduced-motion and short-screen fallback.
+
+Scroll performance: drive Lenis and visual transforms from one RAF; cache untransformed layout measurements, update React only on stage changes, avoid scaling text, and keep mobile layout mode stable during browser toolbar height changes.

@@ -38,3 +38,7 @@ html.lenis{scroll-behavior:auto!important}
 .text-link,.menu-toggle{color:inherit}
 .footer-links{align-items:center}
 .footer-links>a,.footer-links>button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 0;line-height:1.4;color:inherit}
+/* Keep the coastal image composited and lettering at a stable raster scale. */
+.scroll-flow-enabled .hero-photo{transform:translateZ(0) scale(var(--hero-scale,1));backface-visibility:hidden}
+.scroll-flow-enabled .hero-copy{transform:translate3d(0,var(--hero-copy-depth,0px),0);will-change:transform}
+@media(prefers-reduced-motion:reduce){.scroll-flow-enabled .hero-copy,.scroll-flow-enabled .hero-photo{transform:none;will-change:auto}}
