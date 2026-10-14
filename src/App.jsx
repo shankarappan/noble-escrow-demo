@@ -1,3 +1,4 @@
+import { useScrollFlow } from './useScrollFlow.js';
 import { FAQChat } from './FAQChat.jsx';
 import { faqEntries } from './faq-data.mjs';
 const faqs = faqEntries.slice(0, 4).map(({question, answer}) => [question, answer]);
@@ -24,6 +25,9 @@ const stages = [
 const asset = name => `${import.meta.env.BASE_URL}assets/${name}`;
 const summaries = ['Milestone-based payment arrangements.','Holding funds under agreed conditions.','Defined release and refund terms.','A considered approach to conditional payments.'];
 export function App() {
+ const motionRoot=useRef(null);
+ const [motionPaused,setMotionPaused]=useState(false);
+ const {stage,enabled,goToStage}=useScrollFlow(motionRoot,motionPaused);
  const [menu,setMenu]=useState(false), [detail,setDetail]=useState(null), [enquiry,setEnquiry]=useState(false), [selected,setSelected]=useState('Not sure yet'), [sent,setSent]=useState(false);
  const openEnquiry=(service='Not sure yet')=>{setSelected(service);setSent(false);setDetail(null);setMenu(false);setEnquiry(true)};
  const openDetail=kind=>{setMenu(false);setDetail({kind})};
@@ -39,7 +43,7 @@ export function App() {
    </nav>
    <button className="menu-toggle" aria-expanded={menu} aria-controls="mobile-links" aria-label={menu?'Close menu':'Open menu'} onClick={()=>setMenu(!menu)}>{menu?<X size={28}/>:<List size={28}/>}</button>
   </div></header>
-  <main id="main">
+  <main id="main" ref={motionRoot} className={enabled?"scroll-flow-enabled":"scroll-flow-static"}>
    <section className="hero" aria-labelledby="hero-title">
     <img className="hero-photo" src={asset('coastal-hero.webp')} alt="" fetchPriority="high"/>
     <div className="hero-copy"><p className="eyebrow">Independent escrow · New Zealand</p>
@@ -49,9 +53,17 @@ export function App() {
     </div><span className="image-caption">Illustrative imagery</span>
    </section>
    <div className="assurance wrap"><span>Independent by design.</span><span className="assurance-line" aria-hidden="true"/><span>Clear agreements. Defined conditions. A considered approach.</span></div>
-   <section className="process wrap" id="process"><div className="process-copy"><p className="eyebrow">How escrow works</p><h2>A clear path from<br/>agreement to payment.</h2><p>Agree the conditions. Hold funds independently. Release according to the agreement.</p><button className="text-link" onClick={()=>openDetail('process')}>Explore the process <ArrowRight size={22}/></button></div>
-    <figure className="process-art"><img src={asset('escrow-process.webp')} alt="Illustrative escrow process: agree, deposit, confirm and release, guided by an escrow agreement." loading="lazy"/><figcaption>Illustrative process</figcaption><ol className="process-mobile-stages">{stages.map(([title])=><li key={title}>{title}</li>)}</ol></figure>
-   </section>
+   <section className="process-flow" id="process" aria-labelledby="process-title"><div className="process wrap">
+    <div className="process-copy"><p className="eyebrow">How escrow works</p><h2 id="process-title">A clear path from<br/>agreement to payment.</h2><p>Agree the conditions. Hold funds independently. Release according to the agreement.</p><button className="text-link" onClick={()=>openDetail('process')}>Explore the process <ArrowRight size={22}/></button>
+     <button className="motion-toggle" onClick={()=>setMotionPaused(!motionPaused)} aria-pressed={motionPaused}>{motionPaused?'Resume scroll motion':'Pause scroll motion'}</button>
+    </div>
+    <div className="journey-visual"><figure className="process-art"><img src={asset('escrow-process.webp')} alt="Illustrative escrow process: agree, deposit, confirm and release, guided by an escrow agreement." loading="lazy"/><figcaption>Illustrative process</figcaption></figure>
+     <div className="journey-story"><p className="journey-hint">{enabled?'Scroll to follow the journey':'The escrow journey'}<span>0{stage+1} / 04</span></p>
+      <div className="journey-track" role="group" aria-label="Escrow journey stages">{stages.map(([title],i)=><button key={title} className={stage===i?'active':''} aria-pressed={stage===i} onClick={()=>goToStage(i)}><span>0{i+1}</span>{title}</button>)}</div>
+      {enabled?<div key={stage} className="journey-caption"><h3>{stages[stage][0]}</h3><p>{stages[stage][1]}</p></div>:<ol className="journey-static-stages">{stages.map(([title,text])=><li key={title}><h3>{title}</h3><p>{text}</p></li>)}</ol>}
+     </div>
+    </div>
+   </div></section>
    <section className="solutions" id="solutions"><img className="section-photo" src={asset('solutions-landscape.webp')} alt="" loading="lazy"/><div className="wrap solutions-inner"><p className="eyebrow">Our solutions</p><h2>Built for the moments<br/>that matter.</h2><p className="solutions-description">Escrow arrangements tailored to your transaction.</p><div className="service-grid">{services.map((s,i)=><button key={s[0]} className="service" onClick={()=>setDetail({kind:'service',index:i})}><span><strong>{s[0]}</strong><span>{summaries[i]}</span></span><ArrowRight size={25}/></button>)}</div></div></section>
    <section className="clarity" id="trust"><img className="section-photo" src={asset('clarity-landscape.webp')} alt="" loading="lazy"/><div id="contact" className="wrap clarity-inner"><span className="gold-rule"/><h2>Confidence starts with clarity.</h2><p>Understand how funds are handled, who can authorise release<br className="desktop-break"/> and what happens next.</p><div className="clarity-actions"><button className="button" onClick={()=>openEnquiry()}>Talk to the team</button><button className="text-link" onClick={()=>openDetail('trust-overview')}>Trust & security <ArrowRight size={22}/></button></div></div></section>
   </main>

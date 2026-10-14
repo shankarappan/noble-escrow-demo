@@ -26,3 +26,6 @@ Changes pushed to main deploy through the GitHub Pages workflow. That workflow s
 The floating chat runs entirely in the browser, with no AI API, backend, message transmission or conversation storage. Its 17 curated topics live in src/faq-data.mjs and share the first four answers with the FAQ dialog. It matches common phrases and falls back to team contact for unsupported questions. This is a bounded FAQ assistant, not a generative AI adviser. Content is draft and needs business review before production use.
 
 Run matcher checks: node --test tests/faq.test.mjs
+
+## Scroll experience
+Native-scroll coastal parallax, a sticky four-stage escrow journey with perspective rotation, and service/CTA entrance motion. Visitors can select a stage or pause motion. Reduced-motion preferences and short viewports show all stages in a static reading layout. No paid animation services or additional libraries.
